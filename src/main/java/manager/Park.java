@@ -28,7 +28,7 @@ public class Park extends ParkManager{
             }
         }
         if (no == -1) {
-            throw new ParkingLotFullException();
+            throw new ParkingLotFullException("非常抱歉，由于车位已满，暂时无法为您停车！");
         }
         return String.format("%s,%s,%s", parkingName, no, car);
     }
