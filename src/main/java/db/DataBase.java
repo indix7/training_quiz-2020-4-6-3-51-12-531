@@ -12,6 +12,11 @@ public class DataBase {
     private static final String ADMIN = "root";
     private static final String ADMIN_KEY = "mysql";
 
+    /**
+     * 修改停车场的容量
+     * @param parking 停车场
+     * @param capacity 容量
+     */
     public static void modifyParkingCapacity(String parking, int capacity) {
         String sql = "REPLACE INTO parking_capacity " +
                 "(parking, capacity)" +
@@ -27,6 +32,9 @@ public class DataBase {
         }
     }
 
+    /**
+     * 清空保存停车场容量的数据库parking_capacity
+     */
     public static void clearParkingCapacity() {
         String sql = "DELETE FROM parking_capacity";
         try (Connection connection = DriverManager.getConnection(URL, ADMIN, ADMIN_KEY);
@@ -36,6 +44,11 @@ public class DataBase {
             e.printStackTrace();
         }
     }
+
+    /**
+     * 查询停车场容量
+     * @return 所有停车场的容量
+     */
 
     public static LinkedList<ParkingCapacity> queryParkingCapacity() {
         String sql = "SELECT parking, capacity FROM parking_capacity";
@@ -54,6 +67,11 @@ public class DataBase {
         return parkingCapacities;
     }
 
+    /**
+     * 查询某一停车场中的车辆
+     * @param parkingName 停车场名
+     * @return 该停车场中的所有车
+     */
     public static LinkedList<ParkingCar> queryParkingCar(String parkingName) {
         String formatParkingName = formatParkingName(parkingName);
 //        String sql = "SELECT no, car FROM ?";
@@ -74,6 +92,10 @@ public class DataBase {
         return parkingCars;
     }
 
+    /**
+     * 清空某一停车场数据
+     * @param parkingName 停车场
+     */
     public static void clearParking(String parkingName) {
         String formatParkingName = formatParkingName(parkingName);
 //        String sql = "DELETE FROM ?";
@@ -87,6 +109,12 @@ public class DataBase {
         }
     }
 
+    /**
+     * 泊入停车场，将某一车辆添加到该停车场
+     * @param parkingName 停车场
+     * @param no 位置编号
+     * @param car 车牌号
+     */
     public static void modifyParking(String parkingName, int no, String car) {
         String formatParkingName = formatParkingName(parkingName);
 //        String sql = "INSERT INTO ? (no, car) VALUE (?, ?)";
@@ -102,6 +130,12 @@ public class DataBase {
         }
     }
 
+    /**
+     * 移除某一车辆
+     * @param parkingName 停车场
+     * @param no 位置编号
+     * @param car 车牌号
+     */
     public static void removeParkingCar(String parkingName, int no, String car) {
         String formatParkingName = formatParkingName(parkingName);
         String sql = String.format("DELETE FROM %s WHERE no = ? AND car = ?", formatParkingName);
