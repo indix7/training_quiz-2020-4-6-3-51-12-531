@@ -38,6 +38,15 @@ public class ParkingLot implements Comparable<ParkingLot>{
         this.capacity = capacity;
     }
 
+    public void addCar(int no , String car) {
+        this.parkingCars.add(new ParkingCar(no, car));
+    }
+
+    public void removeCar(int no, String car) {
+        this.parkingCars.removeIf(
+                parkingCar -> parkingCar.getNo() == no && parkingCar.getCar().equals(car));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

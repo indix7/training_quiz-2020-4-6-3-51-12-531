@@ -9,20 +9,19 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.stream.IntStream;
 
-public class Park extends ParkManager{
+import static manager.ParkManager.parkingLots;
 
-    public Park() {
-        this.loadLastDataFromDataBase();
-    }
+public class Park{
 
     public String toPark(String car) {
-        Collections.sort(this.parkingLots);
+        Collections.sort(parkingLots);
         String parkingName = "";
         int no = -1;
-        for (ParkingLot parkingLot : this.parkingLots) {
+        for (ParkingLot parkingLot : parkingLots) {
             if (parkingLot.getParkingCars().size() < parkingLot.getCapacity()) {
                 no = this.parkCarNo(parkingLot);
                 parkingName = parkingLot.getName();
+                parkingLot.addCar(no, car);
                 DataBase.modifyParking(parkingName, no, car);
                 break;
             }
@@ -33,6 +32,11 @@ public class Park extends ParkManager{
         return String.format("%s,%s,%s", parkingName, no, car);
     }
 
+    /**
+     * 分配编号
+     * @param parkingLot 停车场
+     * @return 最小的可用编号
+     */
     private int parkCarNo(ParkingLot parkingLot) {
         LinkedList<ParkingCar> parkingCars = parkingLot.getParkingCars();
         Collections.sort(parkingCars);

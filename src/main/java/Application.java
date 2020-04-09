@@ -1,10 +1,12 @@
 import manager.Fetch;
 import manager.InitSystem;
 import manager.Park;
+import manager.ParkManager;
 
 import java.util.Scanner;
 
 public class Application {
+  static ParkManager parkManager = new ParkManager();
 
   public static void main(String[] args) {
     operateParking();
@@ -46,18 +48,15 @@ public class Application {
   }
 
   public static void init(String initInfo) {
-    InitSystem initSystem = new InitSystem();
-    initSystem.toInitSystem(initInfo);
+    parkManager.toInit(initInfo);
   }
 
   public static String park(String carNumber) {
-    Park park = new Park();
-    return park.toPark(carNumber);
+    return parkManager.toParkCar(carNumber);
   }
 
   public static String fetch(String ticket) {
-    Fetch fetch = new Fetch();
-    return fetch.toFetch(ticket);
+    return parkManager.toFetchCar(ticket);
   }
 
 }
